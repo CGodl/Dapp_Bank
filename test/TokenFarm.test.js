@@ -24,15 +24,35 @@ contract('TokenFarm', ([owner, investor]) => {
     await dappToken.transfer(tokenFarm.address, tokens('1000000'))
 
        //Transfer all Dapp tokens to farm
-    await daiToken.transfer(investor, tokens('100'), {from: owner })
+    await daiToken.transfer(investor, tokens('100'), {from: owner})
   })
 
   describe('Mock Dai Deployment', async () => {
     it('has a name', async () => {
-      let daiToken = await DaiToken.new()
       const name = await daiToken.name()
       assert.equal(name, 'Mock DAI Token')
     })
+  })
+
+  describe('DApp Token Deployment', async () => {
+    it('has a name', async () => {
+      const name = await dappToken.name()
+      assert.equal(name, 'DApp Token')
+    })
+  })
+
+  describe('Token Farm Deployment', async () => {
+    it('has a name', async () => {
+      const name = await tokenFarm.name()
+      assert.equal(name, 'DApp Token Farm')
+    })
+
+    it('contract has tokens', async () => {
+      let balance = await dappToken.balanceOf(tokenFarm.address)
+      assert.equal(balance.toString(), tokens('1000000'))
+    })
+
+
   })
 
 })
