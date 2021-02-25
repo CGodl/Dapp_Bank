@@ -15,7 +15,7 @@ module.exports = async function(deployer, network, accounts) {
   const dappToken = await DappToken.deployed()
 
 
-  deployer.deploy(TokenFarm, dappToken.address, daiToken.address)
+  await deployer.deploy(TokenFarm, dappToken.address, daiToken.address)
   const tokenFarm = await TokenFarm.deployed()
 
   //Transfers all dappTokens to the TokenFarm. 
