@@ -24,8 +24,8 @@ contract TokenFarm {
 
     require(_amount > 0, "amount cannot be 0");
 
-
-    daiToken.transferFrom(msg.sender, address(this), _amount); //This is the address of the smart contract/bank
+    //This is the address of the smart contract/bank
+    daiToken.transferFrom(msg.sender, address(this), _amount); 
 
     stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amount;
 
@@ -41,7 +41,7 @@ contract TokenFarm {
 
   function unstakeTokens() public {
     uint balance = stakingBalance[msg.sender];
-    require(balance > 0, 'staking balance cannot be 0');
+    require(balance > 0, "staking balance cannot be 0");
     daiToken.transfer(msg.sender, balance);
     stakingBalance[msg.sender] = 0;
     isStaking[msg.sender] = false;
@@ -55,7 +55,7 @@ contract TokenFarm {
     for (uint i=0; i<stakers.length; i++) {
       address recipient = stakers[i];
       uint balance = stakingBalance[recipient];
-      if (balance > 0) {
+      if(balance > 0) {
         dappToken.transfer(recipient, balance);
       }
     }
