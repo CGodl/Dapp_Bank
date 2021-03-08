@@ -39,18 +39,7 @@ const Main = (props) => {
 
       <div className='card mb-4'>
         <div className='card-body'>
-        <form className="mb-3" onSubmit={e => stakeEvent(e)}
-          
-          // (event) => {
-          //       event.preventDefault()
-          //       let amount
-              
-          //       amount = numInput.current.value.toString()
-          //       amount = window.web3.utils.toWei(amount, 'Ether')
-          //       props.stakeTokens(amount)
-          //     }}
-              
-              >
+        <form className="mb-3" onSubmit={e => stakeEvent(e)}>
             <div>
               <label className='float-left'><b>Stake Tokens</b></label>
               <span className='float-right text-muted'>
