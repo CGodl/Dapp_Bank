@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import DaiToken from '../abis/DaiToken.json';
 import DappToken from '../abis/DappToken.json';
 import TokenFarm from '../abis/TokenFarm.json';
+import Dashboard from './dashboard/Dashboard'
 
 class App extends Component {
 
@@ -14,6 +15,7 @@ class App extends Component {
   };
 
   async loadBlockchainData() {
+
     const web3 = window.web3;
 
     const accounts = await window.ethereum.request({ method: 'eth_accounts' });
@@ -43,7 +45,7 @@ class App extends Component {
     }
     else {
       window.alert("DappToken Contract could not be applied to network");
-    }
+    };
 
     const tokenFarmData = TokenFarm.networks[networkId]
     if (tokenFarmData) {
@@ -55,20 +57,15 @@ class App extends Component {
     else {
       window.alert("TokenFarm Contract could not be applied to network");
     }
-
     this.setState({loading: false})
-
-
   }
 
   async loadWeb3() {
     if (window.ethereum) {
-      console.log('I hit window.ethereum')
       window.web3 = new Web3(window.ethereum)
       await window.ethereum.enable()
     } 
     else if (window.web3) {
-      console.log('I hit window.web3')
       window.web3 = new Web3(window.web3.currentProvider)
     }
     else {
@@ -95,7 +92,23 @@ class App extends Component {
 
 
 
+
+
   render() {
+    let content
+    if (this.state.loading) {
+      content = <p id='loader' className='text-center'>Loading...</p>
+    } else {
+      content = <Dashboard
+        daiTokenBalance={this.state.daiTokenBalance}
+        dappTokenBalance={this.state.dappTokenBalance}
+        stakingBalance={this.state.stakingBalance}
+        // stakeToken={this.stakeToken}
+        // unstakeToken={this.unstakeToken}
+      />
+    }
+
+
     return (
       <div>
         <Navbar account={this.state.account} />
@@ -109,9 +122,7 @@ class App extends Component {
                   rel="noopener noreferrer"
                 >
                 </a>
-
-                <h1>Hello, World!</h1>
-
+                {content}
               </div>
             </main>
           </div>
